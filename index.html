@@ -11,7 +11,7 @@
     <!-- high score link and timer should always be present -->
     <header>
         <div>High Scores</div>
-        <div>Timer</div>
+        <div id="timer">50</div>
     </header>
     <main>
         <!-- the page (div) for the intro -->
@@ -26,11 +26,14 @@
             <button id="start-btn">Start Quiz</button>
         </div>
         <!-- the page (div) for the questions -->
-
+        <div id="question-container">
+            <h2 id="question"></h2>
+            <div id="answers"></div>
+        </div>
         <!-- the page for the end game screen -->
 
         <!-- the page for the high scores -->
-        
+
     </main>
     <script src="./assets/js/script.js"></script>    
 </body>
