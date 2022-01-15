@@ -105,9 +105,23 @@ answersEl.addEventListener("click", answerHandler);
 //click event for reset scores button
 //click event for high scores in header
 
-/* 
-example of targeting the text of a clicked element - for use with answers
-document.querySelector("main").addEventListener("click", function() {
-    console.log(event.target.textContent)
-}) 
-*/
+//do the initials screen
+//display it and hide question container
+//get value of initials typed in and save with score (time left) in object in high scores array
+//make sure to preventDefault() in the function or the submit will refresh the page
+
+//do the high scores screen
+//for loop to display the high scores like used for the answers on the question function
+//h2 for "High Scores" and a div for the scores. Also want 2 buttons "Main Menu" and "Reset Scores"
+
+//save and load with local
+//look this up online or do later
+
+//reset scores
+//highScores array, set it to []
+
+//go to main menu
+//reset timer and question count. Hide high scores, display intro container
+
+//go to high scores screen from clicking header
+//click event to launch high scores screen when it is clicked

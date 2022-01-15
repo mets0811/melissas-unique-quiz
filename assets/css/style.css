@@ -8,3 +8,13 @@
 #question-container {
     display: none;
 }
+
+/* game over style start */
+#game-over-screen {
+    display: none;
+}
+
+/* high scores screen style start */
+#high-scores-screen {
+    display: none;
+}
