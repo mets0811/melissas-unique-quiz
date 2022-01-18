@@ -1,14 +1,19 @@
 //questions, answers, correct answer
 const questions = [
     {
-        question: "Hello?",
-        answers: ["Hi!", "Bye!", "Wow", "Cool"],
-        correct: "Hi!"
+        question: "What is the capital of USA?",
+        answers: ["Florida", "Washington", "Washington DC", "California"],
+        correct: "Washington DC"
     },
     {
-        question: "Question 2",
-        answers: ["1", "2", "3", "4"],
-        correct: "2"
+        question: "How many continents are in the world?",
+        answers: ["4", "6", "7", "10"],
+        correct: "7"
+    },
+    {
+        question: "How many stars are on the American Flag?",
+        answers: ["10", "50", "40", "25"],
+        correct: "50"
     }
 ]
 
@@ -20,14 +25,24 @@ var timer = 50;
 var questionCount = 0;
 
 //selectors
-//button selectors
+//start button selector
 var startBtn = document.querySelector("#start-btn");
 //container selectors
 var introContainerEl = document.querySelector("#intro-container");
 var questionContainerEl = document.querySelector("#question-container");
+var gameoverContainerEl = document.querySelector("#game-over-screen");
+var highScoresContainerEl = document.querySelector("#high-scores-screen");
 //questions and answers
 var questionEl = document.querySelector("#question");
 var answersEl = document.querySelector("#answers");
+//submit score
+var submitScoreEl = document.querySelector("#submit-score");
+var scoreSubmitInputEl = document.querySelector("#score-submit-input");
+//high scores
+var highScoresButtonEl = document.querySelector("#high-scores-button");
+var mainMenuBtnEl = document.querySelector("#main-menu-btn");
+var resetScoresBtnEl = document.querySelector("#reset-scores-btn");
+var scoresContainerEl = document.querySelector("#high-scores-container");
 //timer selector
 var timerEl = document.querySelector("#timer");
 
@@ -44,10 +59,15 @@ function startQuiz() {
 
 function timerStart() {
     var interval = setInterval(function() {
-        if (timer === 0) {
+        if (highScoresContainerEl.style.display === "block") {
             clearInterval(interval);
-            console.log("game over")
-            //end game - hide question container - reveal end game screen container
+            //stops gameOver()
+            return;
+        }
+
+        if (timer === 0 || questionCount === questions.length) {
+            clearInterval(interval);
+            gameOver();
         } else {
             timer = timer - 1;
             timerEl.textContent = timer;
@@ -71,15 +91,16 @@ function questionCreator() {
         questionEl.textContent = questions[questionCount].question;
 
         for (var i = 0; i < questions[questionCount].answers.length; i++) {
+            var div = document.createElement("div");
+            div.textContent = (i + 1) + ". ";
             var answerBtn = document.createElement("button");
             answerBtn.className = "btn answer-btn";
             answerBtn.textContent = questions[questionCount].answers[i];
 
-            answersEl.appendChild(answerBtn);
+            div.appendChild(answerBtn);
+            answersEl.appendChild(div);
         }
-
-        questionCount = questionCount + 1;
-    }
+    } 
 }
 
 function answerHandler(event) {
@@ -91,9 +112,86 @@ function answerHandler(event) {
 }
 
 function checkAnswer(answer) {
-    if (answer !== questions[questionCount - 1].correct) {
+    if (answer !== questions[questionCount].correct) {
         timer = timer - 5;
+        timerEl.textContent = timer;
     }
+
+    questionCount = questionCount + 1;
+
+    if (questionCount === questions.length) {
+        gameOver();
+    }
+}
+
+function gameOver() {
+    questionContainerEl.style.display = "none";
+    gameoverContainerEl.style.display = "block";
+}
+
+function submitHandler(event) {
+    event.preventDefault();
+    var initials = scoreSubmitInputEl.value;
+    var highScore = {name: initials, score: timer};
+    highScores.push(highScore);
+
+    highScoresScreen();
+}
+
+function highScoresScreen() {
+    scoresBoard();
+    introContainerEl.style.display = "none";
+    questionContainerEl.style.display = "none";
+    gameoverContainerEl.style.display = "none";
+    highScoresContainerEl.style.display = "block";
+
+    //resets UI for next quiz attempt
+    timerEl.textContent = 50;
+}
+
+function mainMenu() {
+    highScoresContainerEl.style.display = "none";
+    introContainerEl.style.display = "block";
+}
+
+function scoresBoard() {
+    saveScores();
+    while (scoresContainerEl.firstChild) {
+        scoresContainerEl.removeChild(scoresContainerEl.firstChild);
+    }
+
+    for (var count = 0; count < highScores.length; count++) {
+        var scoreDiv = document.createElement("div");
+        scoreDiv.className = "score-div";
+        scoreDiv.textContent = highScores[count].name + " - " + highScores[count].score;
+        scoresContainerEl.appendChild(scoreDiv);
+    }
+}
+
+function resetScores() {
+    highScores = [];
+    scoresBoard();
+}
+
+function saveScores() {
+    highScores.sort(function(x, y) {
+        return y.score - x.score;
+    });
+
+    highScores = highScores.slice(0, 5);
+
+    localStorage.setItem("highScores", JSON.stringify(highScores));
+}
+
+function loadScores() {
+    var savedScores = localStorage.getItem("highScores");
+
+    if (!savedScores) {
+        return false;
+    }
+
+    savedScores = JSON.parse(savedScores);
+    highScores = savedScores;
 }
 
 //events
@@ -101,27 +199,12 @@ startBtn.addEventListener("click", startQuiz);
 //click event for when a question answer is clicked
 answersEl.addEventListener("click", answerHandler);
 //click event to submit initials
+submitScoreEl.addEventListener("click", submitHandler);
 //click event for main menu button
+mainMenuBtnEl.addEventListener("click", mainMenu);
 //click event for reset scores button
+resetScoresBtnEl.addEventListener("click", resetScores);
 //click event for high scores in header
+highScoresButtonEl.addEventListener("click", highScoresScreen);
 
-//do the initials screen
-//display it and hide question container
-//get value of initials typed in and save with score (time left) in object in high scores array
-//make sure to preventDefault() in the function or the submit will refresh the page
-
-//do the high scores screen
-//for loop to display the high scores like used for the answers on the question function
-//h2 for "High Scores" and a div for the scores. Also want 2 buttons "Main Menu" and "Reset Scores"
-
-//save and load with local
-//look this up online or do later
-
-//reset scores
-//highScores array, set it to []
-
-//go to main menu
-//reset timer and question count. Hide high scores, display intro container
-
-//go to high scores screen from clicking header
-//click event to launch high scores screen when it is clicked
+loadScores();

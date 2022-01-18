@@ -10,39 +10,41 @@
 <body>
     <!-- high score link and timer should always be present -->
     <header>
-        <div>High Scores</div>
+        <div><a href="#" id="high-scores-button">High Scores</a></div>
         <div id="timer">50</div>
     </header>
     <main>
         <!-- the page (div) for the intro -->
-        <div id="intro-container">
-            <h1>Code Quiz</h1>
+        <div id="intro-container" class="container">
+            <h1>Melissa's Unique Quiz</h1>
             <p>
-                This quiz includes coding questions from HTML, CSS, and JS.
+                This quiz includes random questions.
                 You have a set amount of time to finish the quiz.
                 If you miss a question, time is deducted.
                 Press start to begin. And have fun!
             </p>
-            <button id="start-btn">Start Quiz</button>
+            <button id="start-btn" class="btn">Start Quiz</button>
         </div>
         <!-- the page (div) for the questions -->
-        <div id="question-container">
+        <div id="question-container" class="container">
             <h2 id="question"></h2>
             <div id="answers"></div>
         </div>
         <!-- the page for the end game screen -->
-        <div id="game-over-screen"">
+        <div id="game-over-screen" class="container">
             <h2>Game Over</h2>
-            <p>Congrats message and instructs to enter initials to save score</p>
+            <p>Congrats! Enter initials to save score.</p>
             <form action="submit">
-                <input type="text">
-                <button type="submit">Submit Score</button>
+                <input type="text" class="text-input" placeholder="Enter Initials" id="score-submit-input">
+                <button id="submit-score" type="submit" class="btn">Submit Score</button>
             </form>
         </div>
         <!-- the page for the high scores -->
-        <div id="high-scores-screen">
+        <div id="high-scores-screen" class="container">
             <h2>High Scores</h2>
             <div id="high-scores-container"></div>
+            <button class="btn" id="main-menu-btn">Main Menu</button>
+            <button class="btn" id="reset-scores-btn">Reset Scores</button>
         </div>
     </main>
     <script src="./assets/js/script.js"></script>    
