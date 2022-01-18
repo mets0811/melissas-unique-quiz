@@ -14,6 +14,16 @@ const questions = [
         question: "How many stars are on the American Flag?",
         answers: ["10", "50", "40", "25"],
         correct: "50"
+    },
+    {
+        question: "What is the capital of Hawaii?",
+        answers: ["Jacksonville", "Atlanta", "Hartford", "Honolulu"],
+        correct: "Honolulu"
+    },
+    {
+        question: "What time zone is California in?",
+        answers: ["central time","mountain time", "pacific time", "Eastern time"],
+        correct: "pacific time"
     }
 ]
 
